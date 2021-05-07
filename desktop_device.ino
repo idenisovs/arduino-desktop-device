@@ -1,6 +1,7 @@
 #include <Adafruit_BME280.h>
 #include <LiquidCrystal_I2C.h>
 #include <RTClib.h>
+#include <SD.h>
 
 #include "messages.h"
 #include "lcd_symbols.h"
@@ -9,6 +10,7 @@
 #define LCD_HEIGHT 4
 #define FORCE_RTC_ADJUST false
 #define BTN_PIN 2
+#define SDCARD_SS_PIN 10
 
 #ifdef BME280_ADDRESS
     #undef BME280_ADDRESS
@@ -22,12 +24,10 @@ Adafruit_BME280 bme;
 
 bool setupFailed = false;
 
-byte storedSecond = 0;
-
-unsigned int d = 0;
-byte h = 0;
-byte m = 0;
-byte s = 0;
+volatile unsigned int d = 0;
+volatile byte h = 0;
+volatile byte m = 0;
+volatile byte s = 0;
 
 byte updateTrigger = s;
 
@@ -39,6 +39,7 @@ void setup() {
   setupRtc();
   setupButtonHandler();
   setupBme280();
+  setupSdcard();
 
   if (setupFailed) {
     abort();

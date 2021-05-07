@@ -14,4 +14,7 @@ const char * SETUP_BTN = "setup btn1 handler";
 const char * SETUP_BME280 = "setup bme280";
 const char * BME280_FAILED = "bme280 failed";
 
+const char * SDCARD_SETUP = "setup sdcard";
+const char * SDCARD_FAILED = "sdcard failed";
+
 const char * DONE = "done";

@@ -6,6 +6,10 @@ void setupButtonHandler() {
 }
 
 void handleButtonPress() {
+  resetCounters();
+}
+
+void resetCounters() {
   s = 0;
   m = 0;
   h = 0;

@@ -29,6 +29,8 @@ byte h = 0;
 byte m = 0;
 byte s = 0;
 
+byte updateTrigger = s;
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
@@ -48,11 +50,24 @@ void setup() {
 }
 
 void loop() {
+  DateTime now = rtc.now();
+
+  if (updateTrigger != now.second()) {
+    updateScreen(now);
+  }
+
+  delay(250);
+}
+
+void updateScreen(DateTime now) {
   updateCounters();
-  
-  printDateTime(1);
+
+  printDateTime(1, now);
   printTimer(2);
-  printBme280(3);
-  
-  delay(1000);
+
+  if (updateTrigger % 5 == 0) {
+    printBme280(3);
+  }
+
+  updateTrigger = now.second();
 }

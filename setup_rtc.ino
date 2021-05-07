@@ -17,17 +17,17 @@ void setupRtc() {
   }
 }
 
-DateTime printDateTime(byte line) {
-  DateTime now = rtc.now();
+void printDateTime(byte line) {
+  printDateTime(line, rtc.now());
+}
 
+void printDateTime(byte line, DateTime datetime) {
   char output[LCD_WIDTH + 1];
 
-  snprintf(output, sizeof(output), "%02u.%02u.%u. %02u:%02u:%02u", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
+  snprintf(output, sizeof(output), "%02u.%02u.%u. %02u:%02u:%02u", datetime.day(), datetime.month(), datetime.year(), datetime.hour(), datetime.minute(), datetime.second());
 
   lcd.setCursor(0, line - 1);
   lcd.print(output);
-
-  return now;
 }
 
 void updateCounters() {

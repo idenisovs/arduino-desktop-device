@@ -9,6 +9,12 @@ void setupBme280() {
 }
 
 void printBme280(byte line) {
+  printHumidity(line);
+  printPressure(line);
+  printTemperature(line);
+}
+
+void printHumidity(byte line) {
   float humi = bme.readHumidity();
 
   char buffer[LCD_WIDTH];
@@ -19,17 +25,27 @@ void printBme280(byte line) {
  
   lcd.setCursor(0, line-1);
   lcd.print(buffer);
+}
+
+void printPressure(byte line) {
+  float press = bme.readPressure() / 100.0F;
   
+  byte segmentLength = LCD_WIDTH / 2 - 1;
+  char buffer[segmentLength];
+  
+  dtostrf(press, segmentLength, 1, buffer);
+  
+  lcd.setCursor(10, line);
+  lcd.print(buffer);
+  lcd.setCursor(19, line);
+  lcd.write(CLOCK);
+}
+
+void printTemperature(byte line) {
   float temp = bme.readTemperature();
 
   lcd.setCursor(0, line);
   lcd.print(temp);
   lcd.write(DOT);
-  lcd.print("C ");
-
-  float press = bme.readPressure() / 100.0F;
-  
-  lcd.setCursor(13, line);
-  lcd.print(press);
-  lcd.write(CLOCK);
+  lcd.print("C");
 }

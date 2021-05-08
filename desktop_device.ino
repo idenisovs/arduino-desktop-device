@@ -3,35 +3,34 @@
 #include <RTClib.h>
 #include <SD.h>
 
+#include "config.h"
 #include "messages.h"
 #include "lcd_symbols.h"
-
-#define LCD_WIDTH 20
-#define LCD_HEIGHT 4
-#define FORCE_RTC_ADJUST false
-#define BTN_PIN 2
-#define SDCARD_SS_PIN 10
-
-#ifdef BME280_ADDRESS
-    #undef BME280_ADDRESS
-#endif
-
-#define BME280_ADDRESS 0x76
 
 LiquidCrystal_I2C lcd(0x27, LCD_WIDTH, LCD_HEIGHT);
 RTC_DS1307 rtc;
 Adafruit_BME280 bme;
 
+typedef struct Timer {
+  unsigned int d;
+  byte h;
+  byte m;
+  byte s;
+} Timer;
+
 bool setupFailed = false;
 
-volatile unsigned int d = 0;
-volatile byte h = 0;
-volatile byte m = 0;
-volatile byte s = 0;
+unsigned int d = 0;
+byte h = 0;
+byte m = 0;
+byte s = 0;
+
+char timerRecord[LCD_WIDTH + 1];
+bool timerRecordFlag = false;
 
 byte updateTrigger = s;
 
-void setup() {
+void setup() { 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   
@@ -55,6 +54,10 @@ void loop() {
 
   if (updateTrigger != now.second()) {
     updateScreen(now);
+  }
+
+  if (timerRecordFlag) {
+    writeTimerState();
   }
 
   delay(250);

@@ -18,3 +18,4 @@ const char * SDCARD_SETUP = "setup sdcard";
 const char * SDCARD_FAILED = "sdcard failed";
 
 const char * DONE = "done";
+const char * OK = "ok";

@@ -6,18 +6,5 @@ void setupButtonHandler() {
 }
 
 void handleButtonPress() {
-  saveTimerRecord();
-  resetCounters();
-}
-
-void saveTimerRecord() {
-  snprintf(timerRecord, sizeof(timerRecord), "%u:%02u:%02u:%02u", d, h, m, s);
-  timerRecordFlag = true;
-}
-
-void resetCounters() {
-  s = 0;
-  m = 0;
-  h = 0;
-  d = 0;
+  timerResetFlag = true;
 }

@@ -22,37 +22,37 @@ void printDateTime(byte line) {
 }
 
 void printDateTime(byte line, DateTime datetime) {
-  char output[LCD_WIDTH + 1];
+  char output[LCD_WIDTH];
 
-  snprintf(output, sizeof(output), "%02u.%02u.%u. %02u:%02u:%02u", datetime.day(), datetime.month(), datetime.year(), datetime.hour(), datetime.minute(), datetime.second());
+  sprintf(output, "%02u.%02u.%u. %02u:%02u:%02u", datetime.day(), datetime.month(), datetime.year(), datetime.hour(), datetime.minute(), datetime.second());
 
   lcd.setCursor(0, line - 1);
   lcd.print(output);
 }
 
 void updateCounters() {
-  s++;
+  t1.ss++;
 
-  if (s >= 60) {
-    s = 0;
-    m++;
+  if (t1.ss >= 60) {
+    t1.ss = 0;
+    t1.mm++;
   }
 
-  if (m >= 60) {
-    m = 0;
-    h++;
+  if (t1.mm >= 60) {
+    t1.mm = 0;
+    t1.hh++;
   }
 
-  if (h >= 24) {
-    h = 0;
-    d++;
+  if (t1.hh >= 24) {
+    t1.hh = 0;
+    t1.dd++;
   }
 }
 
 void printTimer(byte line) {
-  char output[LCD_WIDTH + 1];
+  char output[LCD_WIDTH];
 
-  snprintf(output, sizeof(output), "%u:%02u:%02u:%02u", d, h, m, s);
+  sprintf(output, "%u:%02u:%02u:%02u ", t1.dd, t1.hh, t1.mm, t1.ss);
 
   lcd.setCursor(0, line - 1);
   lcd.print(output);

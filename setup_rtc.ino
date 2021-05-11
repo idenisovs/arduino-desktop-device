@@ -29,31 +29,3 @@ void printDateTime(byte line, DateTime datetime) {
   lcd.setCursor(0, line - 1);
   lcd.print(output);
 }
-
-void updateCounters() {
-  t1.ss++;
-
-  if (t1.ss >= 60) {
-    t1.ss = 0;
-    t1.mm++;
-  }
-
-  if (t1.mm >= 60) {
-    t1.mm = 0;
-    t1.hh++;
-  }
-
-  if (t1.hh >= 24) {
-    t1.hh = 0;
-    t1.dd++;
-  }
-}
-
-void printTimer(byte line) {
-  char output[LCD_WIDTH];
-
-  sprintf(output, "%u:%02u:%02u:%02u ", t1.dd, t1.hh, t1.mm, t1.ss);
-
-  lcd.setCursor(0, line - 1);
-  lcd.print(output);
-}

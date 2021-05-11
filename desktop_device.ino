@@ -21,8 +21,7 @@ typedef struct Timer {
 Timer t1 = { 0, 0, 0, 0 };
 
 bool setupFailed = false;
-bool timerResetFlag = false;
-
+volatile bool timerResetFlag = false;
 byte updateTrigger = t1.ss;
 
 void setup() {  
